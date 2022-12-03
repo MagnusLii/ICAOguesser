@@ -24,7 +24,7 @@ def gamestart():
     cursor(query)
     query = "DELETE FROM game;"
     cursor(query)
-    return "None", 204
+    return '', 204
 
 # Server start.
 if __name__ == '__main__':
