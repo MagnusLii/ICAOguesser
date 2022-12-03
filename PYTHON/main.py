@@ -5,6 +5,7 @@ import geopy.distance
 
 app = Flask(__name__)
 
+
 def cursor(query):
     sqlcursor = connection.sqlconnect.cursor()
     sqlcursor.execute(query)
@@ -16,10 +17,11 @@ def cursor_fetchall(query):
     outcome = sqlcursor.fetchall()
     return outcome
 
+
+@app.route()
 def gamestart():
     query = f'''DELETE FROM game, goal_reached;'''
     cursor(query)
-
 
 
 # Server start.
