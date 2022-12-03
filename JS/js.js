@@ -1,4 +1,4 @@
 'use strict';
 
 document.getElementById('SP-button').
-    addEventListener('click', function() {fetch('localhost:3000/1')});
+    addEventListener('click', function() {fetch('localhost:3000/1');});
