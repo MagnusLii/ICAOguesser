@@ -20,10 +20,12 @@ def cursor_fetchall(query):
 
 @app.route('/1')
 def gamestart():
-    query = f'''DELETE FROM game, goal_reached;'''
+    query = "DELETE FROM goal_reached;"
+    cursor(query)
+    query = "DELETE FROM game;"
     cursor(query)
     return "None", 204
 
 # Server start.
 if __name__ == '__main__':
-    app.run(use_reloader=True, port=69)
+    app.run(use_reloader=True, port=3000)
