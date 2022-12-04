@@ -7,14 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../CSS/stylesheet.css" rel="stylesheet">
-    <title>**SOMETHING**</title>
+    <title>Main page for software2 airport game project</title>
 </head>
 <body>
 
 </div>
 <div class="container">
+    <!-- Button for singleplayer, also initiates previous game data purge -->
     <a href="http://127.0.0.1:3000/1">
         <button class="button open-button" id="SP-button">singleplayer</button>
+    </a>
+    <!-- Modal form used to setting up new game data. -->
         <dialog class="modal" id="modal">
             <p>123</p>
             <form action="http://127.0.0.1:3000/2" method="post">
@@ -23,7 +26,6 @@
             </form>
             <button class="button close-button">close</button>
         </dialog>
-    </a>
     <button id="MP-button">multiplayer</button>
 </div>
 

@@ -1,16 +1,17 @@
-import mysql.connector
-from flask import Flask, request, Response
+from flask import Flask, request
+
 import connection
-import geopy.distance
 
 app = Flask(__name__)
 
 
+# For POST requests.
 def cursor(query):
     sqlcursor = connection.sqlconnect.cursor()
     sqlcursor.execute(query)
 
 
+# For GET requests.
 def cursor_fetchall(query):
     sqlcursor = connection.sqlconnect.cursor()
     sqlcursor.execute(query)
@@ -18,16 +19,19 @@ def cursor_fetchall(query):
     return outcome
 
 
+# Deletes previous game data from DB.
 @app.route('/1')
-def cleardata():
+def clearData():
     query = "DELETE FROM goal_reached;"
     cursor(query)
     query = "DELETE FROM game;"
     cursor(query)
     return '', 204
 
-@app.route('/2' ,methods=['POST'])
-def updatename():
+
+# Adds info for new game into DB.
+@app.route('/2', methods=['POST'])
+def setupGame():
     givenName = request.form['InsertedName']
     print(givenName)
     i = 1
@@ -35,7 +39,6 @@ def updatename():
     cursor(query)
 
     return '', 204
-
 
 
 # Server start.

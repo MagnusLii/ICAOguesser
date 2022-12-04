@@ -8,13 +8,14 @@ function initMap() {
   const marker = new google.maps.Marker({
     position: {lat: 60.3172, lng: 24.963301},
     map,
-    title: "Hello World!",
+    title: 'Hello World!',
 
-  })
-    const infowindow = new google.maps.InfoWindow({
-    content: "HELSINKI-VANTAAN LENTOKENTTÄ",
-    ariaLabel: "Uluru",
   });
- marker.addListener("click", () => {
+  const infowindow = new google.maps.InfoWindow({
+    content: 'HELSINKI-VANTAAN LENTOKENTTÄ',
+    ariaLabel: 'Uluru',
+  });
+  marker.addListener('click', () => {
     infowindow.open(map, marker);
-    })}
+  });
+}
