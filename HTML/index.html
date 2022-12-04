@@ -10,9 +10,19 @@
     <title>**SOMETHING**</title>
 </head>
 <body>
+
+</div>
 <div class="container">
     <a href="http://127.0.0.1:3000/1">
-        <button id="SP-button">singleplayer</button>
+        <button class="button open-button" id="SP-button">singleplayer</button>
+        <dialog class="modal" id="modal">
+            <p>123</p>
+            <form action="http://127.0.0.1:3000/2" method="post">
+                <input type="text" name="InsertedName">
+                <input type="submit">
+            </form>
+            <button class="button close-button">close</button>
+        </dialog>
     </a>
     <button id="MP-button">multiplayer</button>
 </div>
