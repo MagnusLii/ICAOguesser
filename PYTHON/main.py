@@ -37,8 +37,19 @@ def setupGame():
     i = 1
     query = f'''INSERT INTO game (id, screen_name) VALUES ({i},"{givenName}");'''
     cursor(query)
-
     return '', 204
+
+
+def search_airport():
+    query = f'''SELECT airport.latitude_deg, airport.longitude_deg, airport.name
+            FROM airport;'''
+    list6 = cursor_fetchall(query)
+    print(list6)
+    cursor(query)
+
+
+search_airport()
+
 
 
 # Server start.
