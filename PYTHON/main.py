@@ -20,7 +20,6 @@ def cursor_fetchall(query):
 
 
 # Deletes previous game data from DB.
-@app.route('/1')
 def clearData():
     query = "DELETE FROM goal_reached;"
     cursor(query)
@@ -32,6 +31,7 @@ def clearData():
 # Adds info for new game into DB.
 @app.route('/2', methods=['POST'])
 def setupGame():
+    clearData()
     givenName = request.form['InsertedName']
     print(givenName)
     i = 1
