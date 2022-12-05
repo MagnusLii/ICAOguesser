@@ -40,21 +40,20 @@ def setupGame():
     return '', 204
 
 
-def search_airport():\
-    query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg
-            FROM airport;'''
+def search_airport():
+    query = f'SELECT airport.name, airport.latitude_deg, airport.longitude_deg FROM airport;'
     list6 = cursor_fetchall(query)
-    list5 = [{'name': 'nimi', 'lat': 'korkeus', 'lon': 'leveys'}]
+    list5 = []
     for row in list6:
         name = row[0]
         latitude = row[1]
         longitude = row[2]
-    json = {
-        "name": name,
-        "latitude": latitude,
-        "longitude": longitude
-    }
-    list5.append({'name': name, 'lat': latitude, 'lon': longitude})
+        json = {
+            "name": name,
+            "latitude": latitude,
+            "longitude": longitude
+        }
+        list5.append(json)
     print(list5)
 
 
