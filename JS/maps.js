@@ -1,3 +1,5 @@
+// Gmaps API doesn't work with 'use strict';
+
 function initMap() {
   let trackingnum = 0
   map = new google.maps.Map(document.getElementById('map'), {
