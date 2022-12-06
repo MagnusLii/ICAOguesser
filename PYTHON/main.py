@@ -1,9 +1,12 @@
 from flask import Flask, request
 
+from flask_cors import CORS
+
 import connection
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # For POST requests.
 def cursor(query):
@@ -41,6 +44,7 @@ def setupGame():
 
 
 # Fetches airport names, lat- and longitude degrees for future use in map markers.
+@app.route('/3')
 def search_airport():
     query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg
                 FROM airport;'''
