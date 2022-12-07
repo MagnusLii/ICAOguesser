@@ -1,5 +1,12 @@
 // Gmaps API doesn't work with 'use strict';
 
+async function showdata() {
+  const response = await fetch('http://127.0.0.1:3000/3');
+  const jsonData = await response.json();
+  return jsonData
+}
+const markersJSON = showdata()
+
 function initMap() {
   let trackingnum = 0
   map = new google.maps.Map(document.getElementById('map'), {
@@ -7,11 +14,7 @@ function initMap() {
     center: {lat: 48.85, lng: 2.35},
     zoom: 4,
   });
-  // Temp JSON data for testing purposes, will be replaced by JSON data from backend later on.
-  const markersJSON = [{"name": "Nassen airport", "latitude": 10.123, "longitude": 124.42},
-      {"name": "Jasperin airport","latitude": 50,"longitude": 30,},
-      {"name": "Miston Airport","latitude": 12.341,"longitude": 1.1},
-      {"name": "Danielin Airport","latitude": -8,"longitude": -56.3}]
+
 
   for (let i = 0; i < markersJSON.length; i++) {
 
