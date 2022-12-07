@@ -47,7 +47,8 @@ def setupGame():
 @app.route('/fetchAirportData')
 def search_airport():
     query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg
-                FROM airport;'''
+                FROM airport
+                WHERE type = "medium_airport";'''
     results = cursor_fetchall(query)
     json_list = []
     for row in results:
