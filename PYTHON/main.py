@@ -44,7 +44,7 @@ def setupGame():
 
 
 # Fetches airport names, lat- and longitude degrees for future use in map markers.
-@app.route('/3')
+@app.route('/fetchAirportData')
 def search_airport():
     query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg
                 FROM airport;'''

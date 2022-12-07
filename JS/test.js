@@ -1,10 +1,14 @@
 'use strict';
 
-
 async function showdata() {
-  const response = await fetch('http://127.0.0.1:3000/3');
-  const jsonData = await response.json();
-  console.log(jsonData)
+  fetch('http://127.0.0.1:3000/3')
+  .then(function(response) {
+    response.text().then(function(responseString) {
+        return responseString
+    });
+  });
 }
 
-showdata()
+const jsonn =  showdata()
+
+document.querySelector('p').innerText = jsonn
