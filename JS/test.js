@@ -20,3 +20,9 @@ async function getkm(airportIndex) {
   console.log(json)
   document.querySelector('#distance-offset').innerHTML = json.distance // Currently returns float number representing KM diff between airports.
 }
+
+async function getNextGoalName() {
+  const response = await fetch('http://127.0.0.1:3000/nextgoalname');
+  const json = await response.json();
+  document.querySelector('#current-goal').innerHTML = json.name
+}

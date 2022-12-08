@@ -92,7 +92,7 @@ def setup_game():
     givenName = request.form['InsertedName']
     global numofobjectives
     numofobjectives = int(request.form['Rounds'])
-    i = 1
+    i = 1 # TODO change when multiplayer is implemented.
     query = f'''INSERT INTO game (id, screen_name)
                 VALUES ({i},"{givenName}");'''
     cursor(query)
@@ -143,12 +143,21 @@ def calculate_points(index):
     return distance_in_km, 200
 
 @app.route('/nextgoal')
+def next_goal_update():
+    global currentgoal
+    print('''LOG: updating "currentgoal" in "next_goal_update():"''')
+    currentgoal += 1
+    print('''LOG: "currentgoal" updated in "next_goal_update():"''')
+    return '', 204
+
+@app.route('/nextgoalname')
 def next_goal():
     global currentgoal
-    print('''LOG: updating "currentgoal" in "next_goal():"''')
-    currentgoal += 1
-    print('''LOG: "currentgoal" updated in "next_goal():"''')
-    return '', 204
+    global listofgoals
+    print(currentgoal)
+    print('''LOG: Sending next goal hints in "next_goal():"''')
+    json = {"name": str(listofgoals[currentgoal].name)}
+    return json, 200
 
 
 # Server start.
