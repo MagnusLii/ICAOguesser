@@ -1,3 +1,5 @@
+import random
+
 from flask import Flask, request
 
 from flask_cors import CORS
@@ -7,6 +9,15 @@ import connection
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+# Vars
+numofobjectives = 0
+listofgoals = []
+
+class Objectives:
+    def __int__(self, airportname, icao):
+        self.name = airportname
+        self.icao = icao
 
 # For POST requests.
 def cursor(query):
@@ -36,6 +47,7 @@ def clearData():
 def setupGame():
     clearData()
     givenName = request.form['InsertedName']
+    rounds = request.form['Rounds']
     i = 1
     query = f'''INSERT INTO game (id, screen_name)
                 VALUES ({i},"{givenName}");'''
@@ -46,7 +58,7 @@ def setupGame():
 # Fetches airport names, lat- and longitude degrees for future use in map markers.
 @app.route('/fetchAirportData')
 def search_airport():
-    query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg
+    query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg, airport.ident
                 FROM airport
                 WHERE type = "medium_airport";'''
     results = cursor_fetchall(query)
@@ -55,14 +67,21 @@ def search_airport():
         name = row[0]
         latitude = row[1]
         longitude = row[2]
+        icao = row[3]
         json = {
             "name": name,
             "latitude": latitude,
             "longitude": longitude
+            "icao": icao
         }
         json_list.append(json)
+    for i in range(numofobjectives):
+        randomnum = random.randint(1, len(json_list))
+        listofgoals.append(
+            Objectives(json_list[randomnum].name,
+                       json_list[randomnum].icao))
+    print(listofgoals)
     return json_list
-#TODO send data to JS for marker processing.
 
 
 # Server start.
