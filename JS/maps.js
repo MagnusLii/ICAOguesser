@@ -1,6 +1,13 @@
 // Gmaps API doesn't work with 'use strict';
 // DON'T USE HTTPS, causes errors due to no cert.
 
+// Vars
+// For modal manipulation.
+const closeModal = document.querySelector('.close-button')
+const endOfRoundModal = document.querySelector('#end-of-round-modal');
+const scoreboardModal = document.querySelector('#scoreboard-modal');
+
+
 // Function that handles initialization of the map and creation of airport markers.
 async function initMap() {
   const response = await fetch('http://127.0.0.1:3000/fetchAirportData');
@@ -42,7 +49,9 @@ async function getkm(airportIndex) {
   const response = await fetch(
       'http://127.0.0.1:3000/confirmation/' + airportIndex);
   const json = await response.json();
-  document.querySelector('#distance-offset').innerHTML = json.distance; // Currently returns float number representing KM diff between airports.
+  document.querySelector('#distance-offset').innerHTML = 'You were ' +
+      json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+  endOfRoundModal.showModal();
   await fetch('http://127.0.0.1:3000/nextgoal');
   await getNextGoalName(); // Fetches next goal for player.
 }
@@ -53,3 +62,12 @@ async function getNextGoalName() {
   const json = await response.json();
   document.querySelector('#current-goal').innerHTML = json.name;
 }
+
+// Defining close modal func for ALL modal buttons.
+closeModal.addEventListener('click', () => {
+  endOfRoundModal.close();
+});
+// Ingame scoreboard modal. NOT IMPLEMENTED!
+openModal.addEventListener('click', () => {
+  scoreboardModal.showModal();
+});

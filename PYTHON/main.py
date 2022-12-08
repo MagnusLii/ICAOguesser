@@ -85,13 +85,16 @@ def create_goals(jsonlist):
 
 
 # Adds info for new game into DB.
-@app.route('/2', methods=['POST'])
+@app.route('/gamesetup', methods=['POST'])
 def setup_game():
     print('''LOG: Initializing game in "setup_game():"''')
     clearData()
     givenName = request.form['InsertedName']
     global numofobjectives
+    print('''LOG: Changing 'numofobjectives' in "setup_game():"''')
     numofobjectives = int(request.form['Rounds'])
+    print(f'''"numofobjectives" = {numofobjectives}''')
+
     i = 1 # TODO change when multiplayer is implemented.
     query = f'''INSERT INTO game (id, screen_name)
                 VALUES ({i},"{givenName}");'''
@@ -147,14 +150,18 @@ def next_goal_update():
     global currentgoal
     print('''LOG: updating "currentgoal" in "next_goal_update():"''')
     currentgoal += 1
-    print('''LOG: "currentgoal" updated in "next_goal_update():"''')
-    return '', 204
+    if currentgoal <= numofobjectives:
+        print('''LOG: "currentgoal" updated in "next_goal_update():"''')
+        return '', 204
+    elif currentgoal > numofobjectives:
+        currentgoal = numofobjectives
+        return '', 204
 
 @app.route('/nextgoalname')
 def next_goal():
     global currentgoal
     global listofgoals
-    print(currentgoal)
+    print('Currentgoal index = ' + str(currentgoal))
     print('''LOG: Sending next goal hints in "next_goal():"''')
     json = {"name": str(listofgoals[currentgoal].name)}
     return json, 200

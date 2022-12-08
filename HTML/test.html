@@ -5,12 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+<a>
+    <button class="button open-button" id="SP-button">singleplayer</button>
+</a>
 
-<input type="button" onclick="getNextGoalName()">
+<dialog class="modal" id="scoreboard-modal">
+    <p>scoreboard</p>
+    <button class="button close-button">close</button>
+</dialog>
+<dialog class="modal" id="end-of-round-modal">
+    <p>roundend</p>
+    <button class="button close-button">close</button>
+</dialog>
 
-<p class="p" id="p"> </p>
-<p id="distance-offset">distance</p>
 
-<script src="../JS/test.js"></script>
+<script src="../JS/js.js"></script>
 </body>
 </html>

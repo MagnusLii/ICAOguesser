@@ -16,19 +16,27 @@
         <button class="button open-button" id="SP-button">singleplayer</button>
     </a>
     <!-- Modal form used to setting up new game data. -->
-        <dialog class="modal" id="modal">
-            <p>123</p>
-            <form action="http://127.0.0.1:3000/2" method="post">
-                <label>
-                    <input type="text" name="InsertedName">
-                </label>
-                <label>
-                    <input type="text" name="Rounds">
-                </label>
-                <input type="submit">
-            </form>
-            <button class="button close-button">close</button>
-        </dialog>
+    <dialog class="modal" id="modal">
+        <p>123</p>
+
+
+        <form action="http://127.0.0.1:3000/gamesetup" method="POST">
+            <label>
+                <input type="text" name="InsertedName">
+            </label>
+            <label>
+                <input type="text" name="Rounds">
+            </label>
+            <input type="submit" id="SP-submit">
+        </form>
+
+        <a href="game.html">
+            <button>Start game</button>
+        </a>
+
+
+        <button class="button close-button">close</button>
+    </dialog>
     <button id="MP-button">multiplayer</button>
 </div>
 
