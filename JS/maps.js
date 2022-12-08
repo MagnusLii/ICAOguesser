@@ -1,5 +1,7 @@
 // Gmaps API doesn't work with 'use strict';
+// DON'T USE HTTPS, causes errors due to no cert.
 
+// Function that handles initialization of the map and creation of airport markers.
 async function initMap() {
   const response = await fetch('http://127.0.0.1:3000/fetchAirportData');
   const jsonData = await response.json();
@@ -22,7 +24,7 @@ async function initMap() {
 
   // Creates an infowindow for the marker.
   const infowindow = new google.maps.InfoWindow({
-    content: '<a class="marker-button-' + trackingnum + '"><button>Lock in this airport</button></a>',
+    content: '<input type="button" value="select this airport" class="marker-button-' + trackingnum + '" onclick="getkm(' + trackingnum + ')">',
     ariaLabel: 'Uluru',
   });
 
@@ -31,7 +33,14 @@ async function initMap() {
   marker.addListener('click', () => {
     infowindow.open(map, marker);
   });
-
   }
+}
 
+// Function for getting KM/scorepoints for player after they select an airport.
+async function getkm(airportIndex) {
+  const response = await fetch('http://127.0.0.1:3000/confirmation/' + airportIndex);
+  const json = await response.json();
+  console.log(response)
+  console.log(json)
+  document.querySelector('#distance-offset').innerHTML = json.distance // Currently returns float number representing KM diff between airports.
 }
