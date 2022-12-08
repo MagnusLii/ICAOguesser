@@ -36,11 +36,12 @@ async function initMap() {
   }
 }
 
-// Function for getting KM/scorepoints for player after they select an airport.
+// Function for getting KM/scorepoints for player after they select an airport and updating roundtracker in the endpoint.
 async function getkm(airportIndex) {
   const response = await fetch('http://127.0.0.1:3000/confirmation/' + airportIndex);
   const json = await response.json();
   console.log(response)
   console.log(json)
   document.querySelector('#distance-offset').innerHTML = json.distance // Currently returns float number representing KM diff between airports.
+  await fetch('http://127.0.0.1:3000/nextgoal')
 }
