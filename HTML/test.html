@@ -2,23 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="description" content="A totally awesome game">
+    <meta name="keywords" content="ICAOguesser game">
+    <meta name="author" content="Magnus Liivamägi, Misto Pantzar, Jasper Norring, Daniel Sergun">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../CSS/stylesheet.css" rel="stylesheet">
+    <title>Game page for software2 airport game project</title>
 </head>
 <body>
-<a>
-    <button class="button open-button" id="SP-button">singleplayer</button>
-</a>
 
-<dialog class="modal" id="scoreboard-modal">
-    <p>scoreboard</p>
-    <button class="button close-button">close</button>
-</dialog>
+<div>
+    <p id="current-goal">goal</p>
+</div>
+
+<!-- modal for displaying end of round information -->
 <dialog class="modal" id="end-of-round-modal">
-    <p>roundend</p>
-    <button class="button close-button">close</button>
+    <p>round end</p>
+    <p id="round-end-distance-offset">distance</p>
+    <!-- add somesort of visual display here -->
+    <button class="next-round-button close-button">Next round</button>
+   <div id="map2">
+   </div>
+</dialog>
+
+<!-- modal for displaying end of game information -->
+<dialog class="modal" id="end-of-game-modal">
+    <p>game end</p>
+    <p id="end-of-game-distance-offset">distance</p>
+    <!-- add somesort of visual display here -->
+    <a href="index.html">
+        <button class="next-round-button end-game-button">End game</button>
+    </a>
+</dialog>
+
+<dialog class="modal" id="Distance-map">
+    <p>round end</p>
+    <p id="kakkapylly2">distance</p>
+    <!-- add somesort of visual display here -->
+    <button class="button-to-close">close</button>
 </dialog>
 
 
-<script src="../JS/js.js"></script>
+<!-- gmap integration -->
+<div id="map"></div>
+<script src="../JS/test.js"></script>
+
+<!-- Default APIcall format:  https://maps.googleapis.com/maps/api/js?key=API_KEY&map_ids=eedb0a8713ca32aa&callback=initMap -->
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=API_KEY&map_ids=eedb0a8713ca32aa&callback=initMap">
+</script>
+
 </body>
+
 </html>
