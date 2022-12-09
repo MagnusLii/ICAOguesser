@@ -84,6 +84,7 @@ def create_goals(jsonlist):
                                       str(jsonlist[randomnum]['icao'])))
     print('''LOG: Objects done in "create_goals()"''')
     if currentgoal != 0:
+        print('''LOG: Currentgoal not correct for game start, resetting currentgoal in "create_goals()"''')
         currentgoal = 0
 
 
