@@ -109,8 +109,8 @@ def setup_game():
 @app.route('/fetchAirportData')
 def search_airport():
     query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg, airport.ident
-                FROM airport;'''
-                #WHERE type = "medium_airport";'''
+                FROM airport
+                WHERE type = "large_airport";'''
     print('''LOG: requesting airport data from DB in "search_airport()"''')
     results = cursor_fetchall(query)
     json_list = []
@@ -147,7 +147,7 @@ def calculate_points(index):
     distance_in_km = {"distance": distance_in_km[slicedstr]}
     print(distance_in_km)
 
-    if currentgoal == numofobjectives:
+    if currentgoal == (numofobjectives - 1):
         print('LOG: Returning "distance_in_km, 69" in calculate_points():')
         return distance_in_km, 69
 
