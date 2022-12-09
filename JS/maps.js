@@ -9,10 +9,21 @@ const endOfGameModal = document.querySelector('#end-of-game-modal');
 
 // Function that handles initialization of the map and creation of airport markers.
 async function initMap() {
+
+  // API call stuff.
   const response = await fetch('http://127.0.0.1:3000/fetchAirportData');
   const jsonData = await response.json();
+
+  // To synch markers with ID's used in endpoint.
   let trackingnum = 0;
+
   map = new google.maps.Map(document.getElementById('map'), {
+    mapId: 'eedb0a8713ca32aa',
+    center: {lat: 48.85, lng: 2.35},
+    zoom: 4,
+  });
+
+  map2 = new google.maps.Map(document.getElementById('map-2'), {
     mapId: 'eedb0a8713ca32aa',
     center: {lat: 48.85, lng: 2.35},
     zoom: 4,
@@ -42,6 +53,7 @@ async function initMap() {
   }
   await getNextGoalName(); // Fetches first goal for player.
 }
+
 
 // Function for getting KM/scorepoints for player after they select an airport and updating roundtracker in the endpoint.
 async function getkm(airportIndex) {
