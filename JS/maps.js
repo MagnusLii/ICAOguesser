@@ -3,10 +3,9 @@
 
 // Vars
 // For modal manipulation.
-const closeModal = document.querySelector('.close-button')
+const closeModal = document.querySelector('.close-button');
 const endOfRoundModal = document.querySelector('#end-of-round-modal');
-const scoreboardModal = document.querySelector('#scoreboard-modal');
-
+const endOfGameModal = document.querySelector('#end-of-game-modal');
 
 // Function that handles initialization of the map and creation of airport markers.
 async function initMap() {
@@ -48,12 +47,26 @@ async function initMap() {
 async function getkm(airportIndex) {
   const response = await fetch(
       'http://127.0.0.1:3000/confirmation/' + airportIndex);
-  const json = await response.json();
-  document.querySelector('#distance-offset').innerHTML = 'You were ' +
-      json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
-  endOfRoundModal.showModal();
-  await fetch('http://127.0.0.1:3000/nextgoal');
-  await getNextGoalName(); // Fetches next goal for player.
+
+  // If the status code === 69.
+  if (response.status == 69) {
+    const json = await response.json();
+    document.querySelector(
+        '#end-of-game-distance-offset').innerHTML = 'You were ' +
+        json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+    endOfGameModal.showModal();
+  }
+
+  // Status code will be 69 only if all the goals have been completed.
+  else {
+    const json = await response.json();
+    document.querySelector(
+        '#round-end-distance-offset').innerHTML = 'You were ' +
+        json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+    endOfRoundModal.showModal();
+    await fetch('http://127.0.0.1:3000/nextgoal');
+    await getNextGoalName(); // Fetches next goal for player.
+  }
 }
 
 // Provides goals/hints for player.
@@ -68,6 +81,6 @@ closeModal.addEventListener('click', () => {
   endOfRoundModal.close();
 });
 // Ingame scoreboard modal. NOT IMPLEMENTED!
-openModal.addEventListener('click', () => {
-  scoreboardModal.showModal();
-});
+/* openModal.addEventListener('click', () => {
+  endOfGameModal.showModal();
+}); */

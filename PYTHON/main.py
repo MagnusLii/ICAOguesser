@@ -74,6 +74,7 @@ def create_airports(jsonlist):
 
 
 def create_goals(jsonlist):
+    global currentgoal
     print('''LOG: Creating goal objects in  "create_goals()"''')
     for i in range(0, numofobjectives):
         randomnum = random.randint(1, len(jsonlist))
@@ -82,6 +83,8 @@ def create_goals(jsonlist):
                                       (jsonlist[randomnum]['longitude']),
                                       str(jsonlist[randomnum]['icao'])))
     print('''LOG: Objects done in "create_goals()"''')
+    if currentgoal != 0:
+        currentgoal = 0
 
 
 # Adds info for new game into DB.
@@ -106,8 +109,8 @@ def setup_game():
 @app.route('/fetchAirportData')
 def search_airport():
     query = f'''SELECT airport.name, airport.latitude_deg, airport.longitude_deg, airport.ident
-                FROM airport
-                WHERE type = "medium_airport";'''
+                FROM airport;'''
+                #WHERE type = "medium_airport";'''
     print('''LOG: requesting airport data from DB in "search_airport()"''')
     results = cursor_fetchall(query)
     json_list = []
@@ -143,7 +146,14 @@ def calculate_points(index):
     slicedstr = slice(0, -3)
     distance_in_km = {"distance": distance_in_km[slicedstr]}
     print(distance_in_km)
-    return distance_in_km, 200
+
+    if currentgoal == numofobjectives:
+        print('LOG: Returning "distance_in_km, 69" in calculate_points():')
+        return distance_in_km, 69
+
+    else:
+        print('LOG: Returning "distance_in_km, 200" in calculate_points():')
+        return distance_in_km, 200
 
 @app.route('/nextgoal')
 def next_goal_update():
