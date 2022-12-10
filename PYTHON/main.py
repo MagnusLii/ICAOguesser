@@ -137,6 +137,7 @@ def search_airport():
         }
         json_list.append(json)
     print('''LOG: JSON data Done in "search_airport()"''')
+    create_players()
     create_airports(json_list)
     create_goals(json_list)
     return json_list
@@ -160,7 +161,7 @@ def calculate_points(index):
     middlepointlat = (listofairports[int(index)].latitude + listofgoals[currentgoal].latitude) / 2
     middlepointlon = (listofairports[int(index)].longitude + listofgoals[currentgoal].longitude) / 2
 
-    points = 10000 - distance_in_km
+    points = 10000 - float(distance_in_km)
     if points < 0:
         points = 0
     print(f'points are {points}')
