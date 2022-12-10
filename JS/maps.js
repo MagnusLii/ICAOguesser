@@ -58,7 +58,6 @@ async function initMap() {
     let marker = new google.maps.Marker({
       position: {lat: jsonData[i].latitude, lng: jsonData[i].longitude},
       map,
-      title: jsonData[i].name,
     });
 
     // Creates an infowindow for the marker.
