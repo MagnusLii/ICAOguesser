@@ -145,16 +145,38 @@ def calculate_points(index):
     # Slicing the ' km' from the end of the string.
     print('''LOG: Slicing "distance_in_km" string in "calculate_points():"''')
     slicedstr = slice(0, -3)
-    distance_in_km = {"distance": distance_in_km[slicedstr]}
+    distance_in_km = distance_in_km[slicedstr]
     print(distance_in_km)
+
+    middlepointlat = (listofairports[int(index)].latitude + listofgoals[currentgoal].latitude) / 2
+    middlepointlon = (listofairports[int(index)].longitude + listofgoals[currentgoal].longitude) / 2
+
+
+
+    finaljson = '{' + f'''"distance": {distance_in_km},
+    "choicelat": {listofairports[int(index)].latitude},
+    "choicelon": {listofairports[int(index)].longitude},
+    "goallat": {listofgoals[currentgoal].latitude},
+    "goallon": {listofgoals[currentgoal].longitude},
+    "middlepointlat": {middlepointlat},
+    "middlepointlon": {middlepointlon}''' + '}'
+    print(finaljson)
 
     if currentgoal == (numofobjectives - 1):
         print('LOG: Returning "distance_in_km, 69" in calculate_points():')
-        return distance_in_km, 69
+        return finaljson, 69
 
     else:
         print('LOG: Returning "distance_in_km, 200" in calculate_points():')
-        return distance_in_km, 200
+        return finaljson, 200
+
+
+# Currently obsolete.
+@app.route('/endofroundcoords/<index>')
+def modal_coords(index):
+    user_selected_airport = f"{listofairports[int(index)].latitude}, {listofairports[int(index)].longitude}"
+    current_goal = f"{listofgoals[currentgoal].latitude}, {listofgoals[currentgoal].longitude}"
+
 
 @app.route('/nextgoal')
 def next_goal_update():

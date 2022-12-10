@@ -12,24 +12,24 @@
 </head>
 <body>
 
+<button id="open-modal">modal button</button>
 <div>
     <p id="current-goal">goal</p>
 </div>
 
 <!-- modal for displaying end of round information -->
 <dialog class="modal" id="end-of-round-modal">
-    <p>round end</p>
+    <p>round end ..........................................</p>
     <p id="round-end-distance-offset">distance</p>
-    <!-- add somesort of visual display here -->
+    <div id="map2"></div>
     <button class="next-round-button close-button">Next round</button>
-    <div id="map-2"></div>
 </dialog>
 
 <!-- modal for displaying end of game information -->
 <dialog class="modal" id="end-of-game-modal">
     <p>game end</p>
     <p id="end-of-game-distance-offset">distance</p>
-    <!-- add somesort of visual display here -->
+    <div id="map3"></div>
     <a href="index.html">
         <button class="next-round-button end-game-button">End game</button>
     </a>
@@ -43,5 +43,5 @@
 <!-- SCRIPTS -->
 <script src="../JS/maps.js"></script>
 <!-- Default APIcall format:  https://maps.googleapis.com/maps/api/js?key=API_KEY&map_ids=eedb0a8713ca32aa&callback=initMap -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=API_KEY&map_ids=eedb0a8713ca32aa&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=&map_ids=eedb0a8713ca32aa&callback=initMap"></script>
 </html>

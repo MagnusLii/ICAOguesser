@@ -22,9 +22,15 @@ body{
 }
 
 #map{
-    height: 100vh;
+    min-height: 400px;
+    height: 80vh;
+    min-width: 600px;
+    width: 100vw;
 }
 
-#map-2 {
-    height: 100vh;
+#map2, #map3{
+    min-height: 400px;
+    height: 60vh;
+    min-width: 600px;
+    width: 80vw;
 }
