@@ -156,7 +156,11 @@ async function getkm(airportIndex) {
   if (response.status == 69) {
     document.querySelector(
         '#end-of-game-distance-offset').innerHTML = 'You were ' +
-        json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+        json.distance + 'KM from the goal.';// Currently returns float number representing KM diff between airports.
+    document.querySelector(
+        '#last-current-points').innerHTML = 'You get ' + json.points + ' points.';
+    document.querySelector(
+        '#final-score').innerHTML = 'Final score: ' + json.totalpoints + ' points.';
     endOfGameModal.showModal();
   }
 
@@ -165,6 +169,10 @@ async function getkm(airportIndex) {
     document.querySelector(
         '#round-end-distance-offset').innerHTML = 'You were ' +
         json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+    document.querySelector(
+        '#current-points').innerHTML = 'You get ' + json.points + ' points.';
+    document.querySelector(
+        '#total-points').innerHTML = 'Total: ' + json.totalpoints + ' points.';
     endOfRoundModal.showModal();
     await fetch('http://127.0.0.1:3000/nextgoal');
     await getNextGoalName(); // Fetches next goal for player.
