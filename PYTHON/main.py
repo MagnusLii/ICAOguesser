@@ -155,17 +155,19 @@ def calculate_points(index):
     print('''LOG: Slicing "distance_in_km" string in "calculate_points():"''')
     slicedstr = slice(0, -3)
     distance_in_km = distance_in_km[slicedstr]
+    distance_in_km = int(round(float(distance_in_km), 1))  # Int() func won't accept more than 10 decimals so we must round the number to avoid errors.
     print(distance_in_km)
     print(f'distance is {distance_in_km}')
 
     middlepointlat = (listofairports[int(index)].latitude + listofgoals[currentgoal].latitude) / 2
     middlepointlon = (listofairports[int(index)].longitude + listofgoals[currentgoal].longitude) / 2
 
-    points = 10000 - float(distance_in_km)
+    points = 10000 - distance_in_km
     if points < 0:
         points = 0
     print(f'points are {points}')
     listofplayers[0].points += points
+    finalpoints = int(round((listofplayers[0].points / numofobjectives), 2))
 
     finaljson = '{' + f'''"distance": {distance_in_km},
     "choicelat": {listofairports[int(index)].latitude},
@@ -175,7 +177,8 @@ def calculate_points(index):
     "middlepointlat": {middlepointlat},
     "middlepointlon": {middlepointlon},
     "points": {points},
-    "totalpoints": {listofplayers[0].points}''' + '}'
+    "totalpoints": {listofplayers[0].points},
+    "finalpoints": {finalpoints}''' + '}'
     print(finaljson)
 
     if currentgoal == (numofobjectives - 1):
