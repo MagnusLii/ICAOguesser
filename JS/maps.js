@@ -63,7 +63,7 @@ async function initMap() {
 
     // Creates an infowindow for the marker.
     const infowindow = new google.maps.InfoWindow({
-      content: '<input type="button" value="select this airport" class="marker-button-' +
+      content: '<input type="button" value="select this airport" class="button marker-button-' +
           trackingnum + '" onclick=" getkm(' + trackingnum + ');">', // updateModal(' + trackingnum + ');
       ariaLabel: 'Uluru',
     });
@@ -126,31 +126,26 @@ async function getkm(airportIndex) {
   // Centering end of round/game map in the middle of markers.
   // Zoom changle needs to happen before pan otherwise the pan gets overwritten.
   if (json.distance < 1000) {
-    console.log('1000')
     zoomChange(endOfRoundMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 5);
     zoomChange(endOfGameMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 5);
   } else if (json.distance < 2000) {
-    console.log('2000')
     zoomChange(endOfRoundMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 4);
     zoomChange(endOfGameMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 4);
   } else if (json.distance < 4000) {
-    console.log('4000')
     zoomChange(endOfRoundMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 3);
     zoomChange(endOfGameMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 3);
   } else if (json.distance > 6000) {
-    console.log('6000')
     zoomChange(endOfRoundMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 2);
     zoomChange(endOfGameMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 2);
   } else if (json.distance > 9000) {
-    console.log('9000')
     zoomChange(endOfRoundMap,
         {lat: json.middlepointlat, lng: json.middlepointlon}, 0);
     zoomChange(endOfGameMap,

@@ -12,9 +12,11 @@
 <body>
 
 <div class="container">
-    <a>
-        <button class="button open-button" id="SP-button">singleplayer</button>
-    </a>
+    <div class="mainmenu-buttons">
+        <a>
+            <button class="button open-button" id="SP-button">Play game</button>
+        </a>
+    </div>
     <!-- Modal form used to setting up new game data. -->
     <dialog class="modal" id="modal">
         <p>123</p>
@@ -31,13 +33,12 @@
         </form>
 
         <a href="game.html">
-            <button>Start game</button>
+            <button class="button" role="button">Start game</button>
         </a>
 
 
-        <button class="button close-button">close</button>
+        <button class="button close-button" role="button">close</button>
     </dialog>
-    <button id="MP-button">multiplayer</button>
 </div>
 
 <script src="../JS/js.js"></script>
