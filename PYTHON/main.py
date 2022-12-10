@@ -1,5 +1,3 @@
-
-
 # Required packages = geopy, mysql-connector-python, flask, flask-cors
 
 # Imports
@@ -18,8 +16,14 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # Vars
 currentgoal = 0
 numofobjectives = 10  # 10 goals is default
+listofplayers = []
 listofairports = []
 listofgoals = []
+
+
+class Players:
+    def __init__(self):
+        self.points = 0
 
 
 class Airports:
@@ -63,13 +67,18 @@ def clearData():
     return '', 204
 
 
+def create_players():
+    print('''LOG: Creating player objects in  "create_players()"''')
+    listofplayers.append(Players())
+
+
 def create_airports(jsonlist):
     print('''LOG: Creating airport objects in  "create_airport()"''')
     for i in range(0, len(jsonlist)):
         listofairports.append(Airports(str(jsonlist[i]['name']),
-                                         (jsonlist[i]['latitude']),
-                                         (jsonlist[i]['longitude']),
-                                         str(jsonlist[i]['icao'])))
+                                       (jsonlist[i]['latitude']),
+                                       (jsonlist[i]['longitude']),
+                                       str(jsonlist[i]['icao'])))
     print('''LOG: Objects done in "create_airport()"''')
 
 
@@ -99,9 +108,8 @@ def setup_game():
     numofobjectives = int(request.form['Rounds'])
     print(f'''"numofobjectives" = {numofobjectives}''')
 
-    i = 1 # TODO change when multiplayer is implemented.
     query = f'''INSERT INTO game (id, screen_name)
-                VALUES ({i},"{givenName}");'''
+                VALUES ({1},"{givenName}");'''
     cursor(query)
     return '', 204
 
@@ -147,11 +155,16 @@ def calculate_points(index):
     slicedstr = slice(0, -3)
     distance_in_km = distance_in_km[slicedstr]
     print(distance_in_km)
+    print(f'distance is {distance_in_km}')
 
     middlepointlat = (listofairports[int(index)].latitude + listofgoals[currentgoal].latitude) / 2
     middlepointlon = (listofairports[int(index)].longitude + listofgoals[currentgoal].longitude) / 2
 
-
+    points = 10000 - distance_in_km
+    if points < 0:
+        points = 0
+    print(f'points are {points}')
+    listofplayers[0].points += points
 
     finaljson = '{' + f'''"distance": {distance_in_km},
     "choicelat": {listofairports[int(index)].latitude},
@@ -159,23 +172,18 @@ def calculate_points(index):
     "goallat": {listofgoals[currentgoal].latitude},
     "goallon": {listofgoals[currentgoal].longitude},
     "middlepointlat": {middlepointlat},
-    "middlepointlon": {middlepointlon}''' + '}'
+    "middlepointlon": {middlepointlon},
+    "points": {points},
+    "totalpoints": {listofplayers[0].points}''' + '}'
     print(finaljson)
 
     if currentgoal == (numofobjectives - 1):
-        print('LOG: Returning "distance_in_km, 69" in calculate_points():')
+        print('LOG: Returning "finaljson, 69" in calculate_points():')
         return finaljson, 69
 
     else:
-        print('LOG: Returning "distance_in_km, 200" in calculate_points():')
+        print('LOG: Returning "finaljson, 200" in calculate_points():')
         return finaljson, 200
-
-
-# Currently obsolete.
-@app.route('/endofroundcoords/<index>')
-def modal_coords(index):
-    user_selected_airport = f"{listofairports[int(index)].latitude}, {listofairports[int(index)].longitude}"
-    current_goal = f"{listofgoals[currentgoal].latitude}, {listofgoals[currentgoal].longitude}"
 
 
 @app.route('/nextgoal')
@@ -189,6 +197,7 @@ def next_goal_update():
     elif currentgoal > numofobjectives:
         currentgoal = numofobjectives
         return '', 204
+
 
 @app.route('/nextgoalname')
 def next_goal():
