@@ -19,25 +19,28 @@
     </div>
     <!-- Modal form used to setting up new game data. -->
     <dialog class="modal" id="modal">
-        <p>123</p>
+        <div class="modal-upper-div">
 
-
-        <form action="http://127.0.0.1:3000/gamesetup" method="POST">
-            <label>
-                <input type="text" name="InsertedName">
-            </label>
-            <label>
-                <input type="text" name="Rounds">
-            </label>
-            <input type="submit" id="SP-submit">
-        </form>
-
-        <a href="game.html">
-            <button class="button" role="button">Start game</button>
-        </a>
-
-
-        <button class="button close-button" role="button">close</button>
+            <form action="http://127.0.0.1:3000/gamesetup" method="POST">
+                <li>
+                    <label for="name">Player name:</label>
+                    <input id="name" type="text" name="InsertedName">
+                </li>
+                <li>
+                    <label for="rounds">Number of rounds:</label>
+                    <input id="rounds" type="text" name="Rounds">
+                </li>
+                <li id="submit-button">
+                    <input type="submit" id="SP-submit" value="Save settings">
+                </li>
+            </form>
+            <div>
+                <div class="modal-lower-div">
+                    <a href="game.html">
+                        <button class="button" role="button">Start game</button>
+                    </a>
+                    <button class="button close-button" role="button">close</button>
+                </div>
     </dialog>
 </div>
 
