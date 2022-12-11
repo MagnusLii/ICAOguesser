@@ -62,7 +62,7 @@ async function initMap() {
 
     // Creates an infowindow for the marker.
     const infowindow = new google.maps.InfoWindow({
-      content: '<input type="button" value="select this airport" class="button marker-button-' +
+      content: '<input type="button" value="select this airport" class="select-airport marker-button-' +
           trackingnum + '" onclick=" getkm(' + trackingnum + ');">', // updateModal(' + trackingnum + ');
       ariaLabel: 'Uluru',
     });
