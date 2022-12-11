@@ -18,6 +18,20 @@ body {
     padding: 0;
 }
 
+.container dialog {
+    background-image: linear-gradient(#09C6F9, #045DE9);
+}
+
+.game_html {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: linear-gradient(#0f0c29, #302b63, #24243e);
+}
+
+.game_html dialog {
+    background-image: linear-gradient(#c31432, #240b36);
+}
+
 li {
     list-style-type: none;
     padding-top: 0.5rem;
@@ -46,6 +60,7 @@ li input {
 
 .modal-lower-div {
     padding-top: 2rem;
+    text-align: center;
 }
 
 
@@ -185,6 +200,66 @@ li input {
     text-align: center;
 }
 
+.close-button {
+    min-width: 161.69px;
+}
+
+.next-round-button {
+
+font-family: Roboto, sans-serif;
+font-weight: 900;
+font-size: 14px;
+color: #ff0066f7;
+background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+padding: 10px 35px;
+border: solid #000000 2px;
+border-radius: 50px;
+transition : 191ms;
+transform: translateY(0);
+display: flex;
+flex-direction: row;
+align-items: center;
+cursor: pointer;
+}
+
+.next-round-button:hover{
+
+transition : 191ms;
+padding: 10px 50px;
+transform : translateY(-0px);
+background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+color: #ff0066f7;
+border: solid 2px #000000;
+}
+
+#current-goal1 {
+    color: #c9152e;
+    font-weight: 900;
+    font-size: 150%;
+}
+
+#current-goal {
+    color: #c9152e;
+    font-weight: 900;
+    font-size: 150%;
+}
+
+.game_html dialog p {
+    font-weight: 900;
+    font-size: 120%;
+}
+
+.select-airport {
+    width: 100%;
+    padding-bottom: 20%;
+    padding-top: 20%;
+    color: #ff0066f7;
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 50%;
+}
+
 #map {
     min-height: 400px;
     height: 80vh;
@@ -197,4 +272,9 @@ li input {
     height: 60vh;
     min-width: 400px;
     width: 60vh;
+}
+
+.game_html #map {
+    position: absolute;
+    bottom: 0;
 }
