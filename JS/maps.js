@@ -192,4 +192,7 @@ closeModal.addEventListener('click', () => {
   endOfRoundModal.close();
 });
 
+async function reset(){
+  fetch('http://127.0.0.1:3000/reset')
+}
 
