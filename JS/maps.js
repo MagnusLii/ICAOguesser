@@ -22,9 +22,7 @@ async function initMap() {
     mapId: 'eedb0a8713ca32aa',
     center: {lat: 48.85, lng: 2.35},
     zoom: 4,
-    mapTypeControl: false,
-    fullscreenControl: false,
-    streetViewControl: false,
+    disableDefaultUI: true,
   });
 
   // This needs to be done cause Gmaps has no way to clear makers from secondary maps, Other than outright deleting all markers from all maps and recreating them...............
@@ -34,9 +32,7 @@ async function initMap() {
       mapId: 'eedb0a8713ca32aa',
       center: {lat: 48.85, lng: 2.35},
       zoom: 3,
-      mapTypeControl: false,
-      fullscreenControl: false,
-      streetViewControl: false,
+      disableDefaultUI: true,
     });
     endOfGameMap = new google.maps.Map(document.getElementById('map3'), {
       mapId: 'eedb0a8713ca32aa',
