@@ -59,7 +59,7 @@ async function initMap() {
     // Creates an infowindow for the marker.
     const infowindow = new google.maps.InfoWindow({
       content: '<input type="button" value="select this airport" class="select-airport marker-button-' +
-          trackingnum + '" onclick=" getkm(' + trackingnum + ');">', // updateModal(' + trackingnum + ');
+          trackingnum + '" onclick=" getkm(' + trackingnum + ');">',
       ariaLabel: 'Uluru',
     });
 
@@ -183,7 +183,7 @@ async function getkm(airportIndex) {
 async function getNextGoalName() {
   const response = await fetch('http://127.0.0.1:3000/nextgoalname');
   const json = await response.json();
-  document.querySelector('#current-goal').innerHTML = json.name;
+  document.querySelector('#current-goal').innerHTML ='Find ' + json.name;
 }
 
 // Defining close modal func for ALL modal buttons.
