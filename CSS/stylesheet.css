@@ -206,30 +206,30 @@ li input {
 
 .next-round-button {
 
-font-family: Roboto, sans-serif;
-font-weight: 900;
-font-size: 14px;
-color: #ff0066f7;
-background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-padding: 10px 35px;
-border: solid #000000 2px;
-border-radius: 50px;
-transition : 191ms;
-transform: translateY(0);
-display: flex;
-flex-direction: row;
-align-items: center;
-cursor: pointer;
+    font-family: Roboto, sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    color: #ff0066f7;
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+    padding: 10px 35px;
+    border: solid #000000 2px;
+    border-radius: 50px;
+    transition: 191ms;
+    transform: translateY(0);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
 }
 
-.next-round-button:hover{
+.next-round-button:hover {
 
-transition : 191ms;
-padding: 10px 50px;
-transform : translateY(-0px);
-background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
-color: #ff0066f7;
-border: solid 2px #000000;
+    transition: 191ms;
+    padding: 10px 50px;
+    transform: translateY(-0px);
+    background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+    color: #ff0066f7;
+    border: solid 2px #000000;
 }
 
 #current-goal1 {
@@ -280,4 +280,8 @@ border: solid 2px #000000;
 .game_html #map {
     position: absolute;
     bottom: 0;
+}
+
+a {
+    text-decoration: none;
 }
