@@ -52,7 +52,7 @@ async function initMap() {
 
     // Creates markers on the map.
     let marker = new google.maps.Marker({
-      position: {lat: jsonData[i].latitude, lng: jsonData[i].longitude},
+      position: {lat: parseFloat(jsonData[i].latitude), lng: parseFloat(jsonData[i].longitude)},
       map,
     });
 
@@ -191,8 +191,4 @@ closeModal.addEventListener('click', () => {
   nonCoreMaps();
   endOfRoundModal.close();
 });
-
-async function reset(){
-  fetch('http://127.0.0.1:3000/reset')
-}
 

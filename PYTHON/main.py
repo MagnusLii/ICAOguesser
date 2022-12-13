@@ -14,11 +14,11 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Vars
-current_goal = 0
-num_of_objectives = 10  # 10 goals is default
-list_of_players = []
-list_of_airports = []
-list_of_goals = []
+currentgoal = 0
+numofobjectives = 10  # 10 goals is default
+listofplayers = []
+listofairports = []
+listofgoals = []
 
 
 class Players:
@@ -27,16 +27,16 @@ class Players:
 
 
 class Airports:
-    def __init__(self, airport_name, lat, lon, ICAO):
-        self.name = airport_name
-        self.icao = ICAO
+    def __init__(self, airportname, lat, lon, icao):
+        self.name = airportname
+        self.icao = icao
         self.latitude = lat
         self.longitude = lon
 
 
 class Objectives:
-    def __init__(self, airport_name, lat, lon, icao):
-        self.name = airport_name
+    def __init__(self, airportname, lat, lon, icao):
+        self.name = airportname
         self.icao = icao
         self.latitude = lat
         self.longitude = lon
@@ -57,7 +57,7 @@ def cursor_fetchall(query):
 
 
 # Deletes previous game data from DB.
-def clear_data():
+def clearData():
     print('''LOG: Clearing data from DB in "clearData():"''')
     query = "DELETE FROM goal_reached;"
     cursor(query)
@@ -69,50 +69,47 @@ def clear_data():
 
 def create_players():
     print('''LOG: Creating player objects in  "create_players()"''')
-    list_of_players.append(Players())
+    listofplayers.append(Players())
 
 
 def create_airports(jsonlist):
     print('''LOG: Creating airport objects in  "create_airport()"''')
     for i in range(0, len(jsonlist)):
-        list_of_airports.append(Airports(str(jsonlist[i]['name']),
-                                         (jsonlist[i]['latitude']),
-                                         (jsonlist[i]['longitude']),
-                                         str(jsonlist[i]['icao'])))
+        listofairports.append(Airports(str(jsonlist[i]['name']),
+                                       (jsonlist[i]['latitude']),
+                                       (jsonlist[i]['longitude']),
+                                       str(jsonlist[i]['icao'])))
     print('''LOG: Objects done in "create_airport()"''')
 
 
 def create_goals(jsonlist):
-    global current_goal
+    global currentgoal
     print('''LOG: Creating goal objects in  "create_goals()"''')
-    for i in range(0, num_of_objectives):
+    for i in range(0, numofobjectives):
         randomnum = random.randint(1, len(jsonlist))
-        list_of_goals.append(Objectives(str(jsonlist[randomnum]['name']),
-                                        (jsonlist[randomnum]['latitude']),
-                                        (jsonlist[randomnum]['longitude']),
-                                        str(jsonlist[randomnum]['icao'])))
+        listofgoals.append(Objectives(str(jsonlist[randomnum]['name']),
+                                      (jsonlist[randomnum]['latitude']),
+                                      (jsonlist[randomnum]['longitude']),
+                                      str(jsonlist[randomnum]['icao'])))
     print('''LOG: Objects done in "create_goals()"''')
-    if current_goal != 0:
+    if currentgoal != 0:
         print('''LOG: Currentgoal not correct for game start, resetting currentgoal in "create_goals()"''')
-        current_goal = 0
+        currentgoal = 0
 
 
 # Adds info for new game into DB.
 @app.route('/gamesetup', methods=['POST'])
 def setup_game():
     print('''LOG: Initializing game in "setup_game():"''')
-    clear_data()
-    try:
-        given_name = request.form['InsertedName']
-    except:  # Bare except 'cause we don't have time.
-        given_name = 'John Doe'
-    global num_of_objectives
+    clearData()
+    givenName = request.form['InsertedName']
+    global numofobjectives
     print('''LOG: Changing 'numofobjectives' in "setup_game():"''')
-    num_of_objectives = int(request.form['Rounds'])
-    print(f'''"numofobjectives" = {num_of_objectives}''')
+    numofobjectives = int(request.form['Rounds'])
+    print(f'''"numofobjectives" = {numofobjectives}''')
 
     query = f'''INSERT INTO game (id, screen_name)
-                VALUES ({1},"{given_name}");'''
+                VALUES ({1},"{givenName}");'''
     cursor(query)
     return '', 204
 
@@ -149,8 +146,8 @@ def search_airport():
 @app.route('/confirmation/<index>')  # index = the index number of the airport the player chose as their answer.
 def calculate_points(index):
     print('''LOG: Fetching Lat/lon coords in "calculate_points():"''')
-    user_selected_airport = f"{list_of_airports[int(index)].latitude}, {list_of_airports[int(index)].longitude}"
-    current_goal = f"{list_of_goals[current_goal].latitude}, {list_of_goals[current_goal].longitude}"
+    user_selected_airport = f"{listofairports[int(index)].latitude}, {listofairports[int(index)].longitude}"
+    current_goal = f"{listofgoals[currentgoal].latitude}, {listofgoals[currentgoal].longitude}"
     print('''LOG: Calculating distance in "calculate_points():"''')
     distance_in_km = str(geopy.distance.geodesic(user_selected_airport, current_goal))
 
@@ -158,34 +155,33 @@ def calculate_points(index):
     print('''LOG: Slicing "distance_in_km" string in "calculate_points():"''')
     slicedstr = slice(0, -3)
     distance_in_km = distance_in_km[slicedstr]
-    distance_in_km = int(round(float(distance_in_km), 1))
-    # Int() func won't accept more than 10 decimals, so we must round the number to avoid errors above ^^.
+    distance_in_km = int(round(float(distance_in_km), 1))  # Int() func won't accept more than 10 decimals so we must round the number to avoid errors.
     print(distance_in_km)
     print(f'distance is {distance_in_km}')
 
-    middlepointlat = (list_of_airports[int(index)].latitude + list_of_goals[current_goal].latitude) / 2
-    middlepointlon = (list_of_airports[int(index)].longitude + list_of_goals[current_goal].longitude) / 2
+    middlepointlat = (float(listofairports[int(index)].latitude) + float(listofgoals[currentgoal].latitude)) / 2
+    middlepointlon = (float(listofairports[int(index)].longitude) + float(listofgoals[currentgoal].longitude)) / 2
 
     points = 10000 - distance_in_km
     if points < 0:
         points = 0
     print(f'points are {points}')
-    list_of_players[0].points += points
-    finalpoints = int(round((list_of_players[0].points / num_of_objectives), 2))
+    listofplayers[0].points += points
+    finalpoints = int(round((listofplayers[0].points / numofobjectives), 2))
 
     finaljson = '{' + f'''"distance": {distance_in_km},
-    "choicelat": {list_of_airports[int(index)].latitude},
-    "choicelon": {list_of_airports[int(index)].longitude},
-    "goallat": {list_of_goals[current_goal].latitude},
-    "goallon": {list_of_goals[current_goal].longitude},
+    "choicelat": {listofairports[int(index)].latitude},
+    "choicelon": {listofairports[int(index)].longitude},
+    "goallat": {listofgoals[currentgoal].latitude},
+    "goallon": {listofgoals[currentgoal].longitude},
     "middlepointlat": {middlepointlat},
     "middlepointlon": {middlepointlon},
     "points": {points},
-    "totalpoints": {list_of_players[0].points},
+    "totalpoints": {listofplayers[0].points},
     "finalpoints": {finalpoints}''' + '}'
     print(finaljson)
 
-    if current_goal == (num_of_objectives - 1):
+    if currentgoal == (numofobjectives - 1):
         print('LOG: Returning "finaljson, 69" in calculate_points():')
         return finaljson, 69
 
@@ -196,41 +192,25 @@ def calculate_points(index):
 
 @app.route('/nextgoal')
 def next_goal_update():
-    global current_goal
+    global currentgoal
     print('''LOG: updating "currentgoal" in "next_goal_update():"''')
-    current_goal += 1
-    if current_goal <= num_of_objectives:
+    currentgoal += 1
+    if currentgoal <= numofobjectives:
         print('''LOG: "currentgoal" updated in "next_goal_update():"''')
         return '', 204
-    elif current_goal > num_of_objectives:
-        current_goal = num_of_objectives
+    elif currentgoal > numofobjectives:
+        currentgoal = numofobjectives
         return '', 204
 
 
 @app.route('/nextgoalname')
 def next_goal():
-    global current_goal
-    global list_of_goals
-    print('Currentgoal index = ' + str(current_goal))
+    global currentgoal
+    global listofgoals
+    print('Currentgoal index = ' + str(currentgoal))
     print('''LOG: Sending next goal hints in "next_goal():"''')
-    json = {"name": str(list_of_goals[current_goal].name)}
+    json = {"name": str(listofgoals[currentgoal].name)}
     return json, 200
-
-
-@app.route('/reset')
-def factory_reset():
-    # DANIEL.... this is not what I meant.....
-    global current_goal
-    global num_of_objectives
-    global list_of_players
-    global list_of_airports
-    global list_of_goals
-    current_goal = 0
-    num_of_objectives = 10
-    list_of_players = []
-    list_of_airports = []
-    list_of_goals = []
-    clear_data()
 
 
 # Server start.
