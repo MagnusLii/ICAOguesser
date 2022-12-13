@@ -81,7 +81,7 @@ async function getkm(airportIndex) {
 
   // Adding player choice markers to end of round/game maps.
   let playerChoiceMarker = new google.maps.Marker({
-    position: {lat: json.choicelat, lng: json.choicelon},
+    position: {lat: parseFloat(json.choicelat), lng: parseFloat(json.choicelon)},
     icon: {
       url: '../ICONS/playerchoice.png',
       scaledSize: new google.maps.Size(40, 40),
@@ -153,7 +153,7 @@ async function getkm(airportIndex) {
   if (response.status == 69) {
     document.querySelector(
         '#end-of-game-distance-offset').innerHTML = 'You were ' +
-        json.distance + 'KM from the goal.';// Currently returns float number representing KM diff between airports.
+        json.distance + 'KM from the goal.';
     document.querySelector(
         '#last-current-points').innerHTML = 'You get ' + json.points +
         ' points.';
@@ -167,7 +167,7 @@ async function getkm(airportIndex) {
   else {
     document.querySelector(
         '#round-end-distance-offset').innerHTML = 'You were ' +
-        json.distance + 'KM from the goal.'; // Currently returns float number representing KM diff between airports.
+        json.distance + 'KM from the goal.';
     document.querySelector(
         '#current-points').innerHTML = 'You get ' + json.points + ' points.';
     document.querySelector(
